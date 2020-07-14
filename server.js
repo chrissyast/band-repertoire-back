@@ -19,7 +19,6 @@ app.post('/api*', async (req, apires, next) => {
     let output = '';
     const headers = { 'Content-Type': 'application/json','Authorization': `Token token=${process.env.INTERNAL_API_KEY}`}
     await axios.post(
-        // TODO change for production
         `${backend}/${req.originalUrl}`,
         req.body,
         {headers: headers}
@@ -29,5 +28,4 @@ app.post('/api*', async (req, apires, next) => {
     apires.send(output.data);
 });
 
-// TODO change for production
 app.listen(port);
