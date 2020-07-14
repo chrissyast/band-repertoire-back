@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json())
 const dotenv = require('dotenv')
 dotenv.config()
+const port = process.env.PORT || 4000
+const backend = process.env.BACKEND_SERVER || 'http://localhost:3001'
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", process.env.CORS_ORIGINS);
@@ -18,7 +20,7 @@ app.post('/api*', async (req, apires, next) => {
     const headers = { 'Content-Type': 'application/json','Authorization': `Token token=${process.env.INTERNAL_API_KEY}`}
     await axios.post(
         // TODO change for production
-        `http://localhost:3001${req.originalUrl}`,
+        `${backend}/${req.originalUrl}`,
         req.body,
         {headers: headers}
     )
@@ -28,4 +30,4 @@ app.post('/api*', async (req, apires, next) => {
 });
 
 // TODO change for production
-app.listen(3001);
+app.listen(port);
